@@ -145,7 +145,7 @@
 
             <!-- UiTM Logo -->
             <div class="flex-center">
-                <img src="{{ asset('image/image.png') }}" class="logo" alt="UiTM Logo" width="300">
+                <img src="{{ asset('image/image.png') }}" class="logo" alt="UiTM Logo" width="250">
             </div>
 
             <!-- Title -->
