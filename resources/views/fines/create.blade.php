@@ -8,7 +8,6 @@
 
         @include('fines.form')
 
-        <button type="submit" class="btn btn-primary">Create Fine</button>
     </form>
 </div>
 @endsection
