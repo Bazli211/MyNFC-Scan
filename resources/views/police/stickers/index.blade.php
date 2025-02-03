@@ -15,7 +15,9 @@
             <th>ID</th>
             <th>Unique ID</th>
             <th>Student Matric</th>
-            <th>Validity Date</th>
+            <th>Application Date</th>
+            <th>Accepted Date</th>
+            <th>Expired Date</th>
             <th>Status</th>
             <th>Actions</th>
         </tr>
@@ -26,7 +28,9 @@
                 <td>{{ $sticker->id }}</td>
                 <td>{{ $sticker->unique_id }}</td>
                 <td>{{ $sticker->student_matricNumber }}</td>
-                <td>{{ $sticker->validity_date }}</td>
+                <td>{{ $sticker->requested_date }}</td>
+                <td>{{ $sticker->accepted_date }}</td>
+                <td>{{ $sticker->expired_date }}</td>
                 <td>{{ $sticker->status_sticker }}</td>
                 <td>
                     <a href="{{ route('police.stickers.show', $sticker->id) }}" class="btn btn-info">Details</a>
@@ -49,3 +53,4 @@
 {{ $stickers->links() }}
 </div>
 @endsection
+
