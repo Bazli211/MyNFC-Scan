@@ -16,12 +16,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'matric_number', 'staff_id','kod_program','fakulti','kolej'
+        'name', 'email', 'password', 'matric_number', 'staff_id','kod_program','fakulti','kolej','student_status'
     ];
-    public function sticker()
+    public function stickers()
     {
         return $this->hasOne(Sticker::class, 'student_matricNumber', 'matric_number');
-    }
+    }    
     
     public function vehicle()
     {
