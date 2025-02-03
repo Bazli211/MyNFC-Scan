@@ -30,5 +30,5 @@
     </div>
 </div>
 
-<script src="{{ asset('js/nfc_write.js') }}"></script>
+<script src="{{ secure_asset('js/nfc_write.js') }}"></script>
 @endsection
