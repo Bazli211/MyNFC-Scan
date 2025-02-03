@@ -3,93 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>NFC Scanner</title>
     <style>
+        /* General Body Styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Gradient background */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        #scan-button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #scan-button:hover {
-            background-color: #0056b3;
-        }
-
-        #result {
-            margin-top: 15px;
-            font-size: 1rem;
-            color: #212529;
+            color: #ffffff;
             text-align: center;
         }
 
-        .button-group {
+        h1 {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #scan-button {
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            background-color: #ff7f50;
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #scan-button:hover {
+            background-color: #e56744;
+            transform: scale(1.05);
+        }
+
+        #result {
             margin-top: 20px;
+            font-size: 1.1rem;
+            color: #f8f9fa;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-group {
+            margin-top: 30px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .action-button {
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 12px 24px;
+            font-size: 1.1rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .action-button.fine {
             background-color: #28a745;
-            color: white;
+            box-shadow: 0 4px 10px rgba(0, 128, 0, 0.4);
         }
 
         .action-button.fine:hover {
             background-color: #218838;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 128, 0, 0.5);
         }
 
         .action-button.cancel {
             background-color: #dc3545;
-            color: white;
+            box-shadow: 0 4px 10px rgba(128, 0, 0, 0.4);
         }
 
         .action-button.cancel:hover {
             background-color: #c82333;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(128, 0, 0, 0.5);
         }
 
+        /* Media Query for Mobile */
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
 
             #scan-button, .action-button {
-                font-size: 0.9rem;
-                padding: 8px 16px;
+                font-size: 1rem;
+                padding: 10px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>NFC Scanner</h1>
+    <h1>Scan NFC Tag</h1>
     <button id="scan-button">Scan NFC Tag</button>
     <div id="result"></div>
     
@@ -104,44 +121,51 @@
         const cancelButton = document.getElementById('cancel-button');
         const resultDiv = document.getElementById('result');
 
-        let nfcData = null;
-
         scanButton.addEventListener('click', async () => {
             try {
                 const ndef = new NDEFReader();
                 await ndef.scan();
 
-                ndef.onreading = async event => {
-                    const message = event.message;
-                    nfcData = '';
+                ndef.onreading = async (event) => {
+                    const decoder = new TextDecoder();
+                    let nfcData = decoder.decode(event.message.records[0].data);
 
-                    for (const record of message.records) {
-                        nfcData += record.data;
-                    }
+                    const [studentMatricNum, stickerId] = nfcData.split(',');
+                    const cleanMatricNum = studentMatricNum.trim();
+                    const cleanStickerId = stickerId.trim();
 
-                    // Send the NFC data to the backend
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
                     const response = await fetch('/scan', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            'X-CSRF-TOKEN': csrfToken,
                         },
-                        body: JSON.stringify({ nfc_data: nfcData })
+                        body: JSON.stringify({
+                            student_matricNum: cleanMatricNum,
+                            sticker_id: cleanStickerId,
+                        }),
                     });
 
                     const data = await response.json();
 
                     if (response.ok) {
-                        // Enable the Fine button and attach the fine URL
-                        fineButton.disabled = false;
-                        fineButton.dataset.url = `/fines/create?student_matricNum=${encodeURIComponent(data.data.student_matricNum)}&sticker_id=${encodeURIComponent(data.data.sticker_id)}`;
-                        resultDiv.textContent = 'NFC data scanned successfully!';
+                        resultDiv.textContent = data.message || 'NFC data scanned successfully!';
+
+                        if (data.fine_required) {
+                            fineButton.disabled = false;
+                            fineButton.dataset.url = `/fines/create?student_matricNum=${encodeURIComponent(data.data.student_matricNum)}&sticker_id=${encodeURIComponent(data.data.sticker_id)}`;
+                        } else {
+                            fineButton.disabled = true;
+                        }
                     } else {
-                        resultDiv.textContent = data.message;
+                        resultDiv.textContent = data.message || 'An error occurred during scanning.';
                     }
                 };
             } catch (error) {
-                resultDiv.textContent = 'Error: ' + error.message;
+                resultDiv.textContent = 'Error during NFC scan.';
+                console.error('Error during NFC scan:', error);
             }
         });
 
@@ -152,9 +176,10 @@
         });
 
         cancelButton.addEventListener('click', () => {
-            window.location.href = '/dashboard'; // Replace with the desired cancel redirection URL
+            window.location.href = '/police/dashboard'; // Replace with the desired cancel redirection URL
         });
     </script>
 </body>
 </html>
+
 
