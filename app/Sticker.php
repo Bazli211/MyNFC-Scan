@@ -14,10 +14,12 @@ class Sticker extends Model
     protected $fillable = [
         'unique_id', // Use the custom ID
         'student_matricNumber',
-        'validity_date',
+        'requested_date',
         'status_sticker',
+        'expired_date',
+        'accepted_date',
     ];
-    const STATUS_REQUESTED = 'requested';
+    const STATUS_REQUESTED = 'pending';
     const STATUS_APPROVED = 'approved';
     const STATUS_REJECTED = 'rejected';
 
@@ -27,7 +29,9 @@ class Sticker extends Model
      * @var array
      */
     protected $dates = [
-        'validity_date',
+        'requested_date',
+        'accepted_date',
+        'expired_date',
     ];
 
     /**
@@ -58,5 +62,15 @@ class Sticker extends Model
 
         return 'ARAU-' . $nextNumber;
     }
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'student_matricNumber','student_matricNumber');
+    }
+
+    public function isExpired()
+    {
+        return $this->expired_date && $this->expired_date->isPast();
+    }
+
     
 }
