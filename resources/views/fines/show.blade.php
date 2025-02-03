@@ -10,6 +10,7 @@
             <p><strong>Code Programme:</strong> {{ $fine->kod_program }}</p>
             <p><strong>Faculty:</strong> {{ $fine->fakulti }}</p>
             <p><strong>College:</strong> {{ $fine->kolej }}</p>
+            <p><strong>College:</strong> {{ $fine->status_pelajar }}</p>
             <p><strong>Sticker ID:</strong> {{ $fine->sticker_id }}</p>
             <p><strong>Fine Date:</strong> {{ $fine->fine_date }}</p>
             <p><strong>Location:</strong> {{ $fine->location }}</p>
@@ -55,3 +56,4 @@
     }
 </script>
 @endsection
+
