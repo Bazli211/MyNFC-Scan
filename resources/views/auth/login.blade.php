@@ -29,7 +29,11 @@
 
                                 <div class="form-group">
                                     <label for="student_matric_number">{{ __('Matric Number') }}</label>
-                                    <input id="student_matric_number" type="text" class="form-control @error('identifier') is-invalid @enderror" name="identifier" value="{{ old('identifier') }}" placeholder="Enter your Matric Number" required autofocus>
+                                    <input id="student_matric_number" type="text" class="form-control @error('identifier') is-invalid @enderror" 
+                                           name="identifier" value="{{ old('identifier') }}" 
+                                           placeholder="Enter your Matric Number" required autofocus 
+                                           pattern="\d{10}" title="Matric Number must be exactly 10 digits" 
+                                           autocomplete="username">
                                     @error('identifier')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -39,12 +43,19 @@
 
                                 <div class="form-group">
                                     <label for="student_password">{{ __('Password') }}</label>
-                                    <input id="student_password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Enter your Password" required>
+                                    <input id="student_password" type="password" class="form-control @error('password') is-invalid @enderror" 
+                                           name="password" placeholder="Enter your Password" required 
+                                           autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                                    <label class="form-check-label" for="remember_me">{{ __('Remember Me') }}</label>
                                 </div>
 
                                 <div class="form-group text-center">
@@ -60,7 +71,10 @@
 
                                 <div class="form-group">
                                     <label for="staff_id">{{ __('Staff ID') }}</label>
-                                    <input id="staff_id" type="text" class="form-control @error('identifier') is-invalid @enderror" name="identifier" value="{{ old('identifier') }}" placeholder="Enter your Staff ID" required autofocus>
+                                    <input id="staff_id" type="text" class="form-control @error('identifier') is-invalid @enderror" 
+                                           name="identifier" value="{{ old('identifier') }}" 
+                                           placeholder="Enter your Staff ID" required autofocus 
+                                           autocomplete="username">
                                     @error('identifier')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -70,12 +84,19 @@
 
                                 <div class="form-group">
                                     <label for="staff_password">{{ __('Password') }}</label>
-                                    <input id="staff_password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Enter your Password" required>
+                                    <input id="staff_password" type="password" class="form-control @error('password') is-invalid @enderror" 
+                                           name="password" placeholder="Enter your Password" required 
+                                           autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember_me_staff" name="remember">
+                                    <label class="form-check-label" for="remember_me_staff">{{ __('Remember Me') }}</label>
                                 </div>
 
                                 <div class="form-group text-center">
@@ -85,6 +106,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="card-footer text-center">
                     <button class="btn btn-outline-primary btn-block" onclick="window.open('https://mail.uitm.edu.my/')">
                         Tatacara Pengaktifan Google UiTM
@@ -95,6 +117,9 @@
     </div>
 </div>
 
+
 @endsection
+
+
 
 
