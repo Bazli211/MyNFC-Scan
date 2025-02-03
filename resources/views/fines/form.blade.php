@@ -139,8 +139,8 @@
 
              <!-- Status Pelajar-->
              <div class="form-group">
-                <label for="fakulti">Faculty</label>
-                <input type="text" class="form-control" id="fakulti" name="fakulti"
+                <label for="student_status">Status Student</label>
+                <input type="text" class="form-control" id="student_status" name="student_status"
                     value="{{ old('fakulti', isset($fine->student_status)?$fine->student->student_status : '') }}" readonly>
             </div>
             
