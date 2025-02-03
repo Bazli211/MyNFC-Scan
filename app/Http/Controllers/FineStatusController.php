@@ -17,8 +17,16 @@ class FineStatusController extends Controller
 
     public function show($id)
     {
-        // Fetch a specific fine status
-        $status = FineStatus::findOrFail($id);
+        $status = FineStatus::with('user')->findOrFail($id);
         return view('fine_status.show', compact('status'));
     }
+    
+
+    public function updateStatus(Request $request, $id)
+{
+    $status = FineStatus::findOrFail($id);
+    $status->update(['fine_status' => $request->input('fine_status')]);
+
+    return redirect()->route('fine_status.index')->with('success', 'Fine status updated successfully.');
+}
 }
