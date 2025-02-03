@@ -20,6 +20,7 @@ class StudentController extends Controller
             'kod_program' => 'required|string|max:255',
             'fakulti' => 'required|string|max:255',
             'kolej' => 'required|string|max:255',
+            'student_status' => 'required|string|max:255',
         ]);
 
         $student = Auth::user();
@@ -28,6 +29,7 @@ class StudentController extends Controller
             'kod_program' => $request->kod_program,
             'fakulti' => $request->fakulti,
             'kolej' => $request->kolej,
+            'student_status' => $request->student_status,
         ]);
 
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
