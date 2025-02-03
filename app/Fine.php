@@ -22,6 +22,7 @@ class Fine extends Model
         'kod_program',
         'fakulti',
         'kolej',
+        'student_status',
         'di_kunci_di_saman',
         'dikompaun',
         'compounded_expiration',
