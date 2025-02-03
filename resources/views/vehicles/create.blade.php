@@ -13,12 +13,12 @@
             <div>
                 <label>
                     <input type="radio" name="vehicle_type" value="motorcycle" class="vehicle-type" 
-                    {{ old('vehicle_type') == 'motorcycle' ? 'checked' : '' }} required>
+                    {{ old('vehicle_type') == 'Motorcycle' ? 'checked' : '' }} required>
                     Motorcycle
                 </label>
                 <label>
                     <input type="radio" name="vehicle_type" value="car" class="vehicle-type" 
-                    {{ old('vehicle_type') == 'car' ? 'checked' : '' }}>
+                    {{ old('vehicle_type') == 'Car' ? 'checked' : '' }}>
                     Car
                 </label>
             </div>
@@ -57,12 +57,12 @@
         <div class="form-group">
             <label for="vehicle_color">Vehicle Color</label>
             <select id="vehicle_color" name="vehicle_color" class="form-control" required>
-                <option value="red" {{ old('vehicle_color') == 'red' ? 'selected' : '' }}>Red</option>
-                <option value="blue" {{ old('vehicle_color') == 'blue' ? 'selected' : '' }}>Blue</option>
-                <option value="black" {{ old('vehicle_color') == 'black' ? 'selected' : '' }}>Black</option>
-                <option value="white" {{ old('vehicle_color') == 'white' ? 'selected' : '' }}>White</option>
-                <option value="yellow" {{ old('vehicle_color') == 'yellow' ? 'selected' : '' }}>Yellow</option>
-                <option value="green" {{ old('vehicle_color') == 'green' ? 'selected' : '' }}>Green</option>
+                <option value="red" {{ old('vehicle_color') == 'Red' ? 'selected' : '' }}>Red</option>
+                <option value="blue" {{ old('vehicle_color') == 'Blue' ? 'selected' : '' }}>Blue</option>
+                <option value="black" {{ old('vehicle_color') == 'Black' ? 'selected' : '' }}>Black</option>
+                <option value="white" {{ old('vehicle_color') == 'White' ? 'selected' : '' }}>White</option>
+                <option value="yellow" {{ old('vehicle_color') == 'Yellow' ? 'selected' : '' }}>Yellow</option>
+                <option value="green" {{ old('vehicle_color') == 'Green' ? 'selected' : '' }}>Green</option>
                 <!-- Add more colors as needed -->
             </select>
         </div>
@@ -77,7 +77,7 @@
 
 <script>
     const brands = {
-        motorcycle: ['Honda', 'Yamaha', 'Suzuki','modenas'],
+        motorcycle: ['Honda', 'Yamaha', 'Suzuki','Modenas'],
         car: ['Toyota', 'Ford', 'BMW','Perodua','Proton','Hyundai','Honda']
     };
 
