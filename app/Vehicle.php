@@ -16,6 +16,8 @@ class Vehicle extends Model
         'vehiclePlateNum',
         'vehicle_type',
         'vehicle_brand',
+        'motorcycle_model',
+        'car_model',
         'sticker_date',
         'vehicle_color',
         'roadtax_date',
@@ -30,6 +32,10 @@ class Vehicle extends Model
     public function sticker()
     {
         return $this->hasOne(Sticker::class, 'student_matricNumber', 'student_matricNumber');
+    }       
+    public function isRoadTaxExpired()
+    {
+        return $this->roadtax_date->isPast();
     }
 }
 
