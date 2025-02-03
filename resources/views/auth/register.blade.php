@@ -43,6 +43,7 @@
                     <div id="student-registration">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
+                            <input type="hidden" name="user_type" value="student">
                             <div class="form-group">
                                 <label for="student_name">{{ __('Name') }}</label>
                                 <input id="student_name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
@@ -53,7 +54,7 @@
 
                             <div class="form-group">
                                 <label for="matric_number">{{ __('Matric Number') }}</label>
-                                <input id="matric_number" type="text" class="form-control @error('matric_number') is-invalid @enderror" name="matric_number" value="{{ old('matric_number') }}" required>
+                                <input id="matric_number" type="text" class="form-control @error('matric_number') is-invalid @enderror" name="matric_number" value="{{ old('matric_number') }}" required pattern="\d{10}" title="Matric Number must be 10 digits">
                                 @error('matric_number')
                                     <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                 @enderror
@@ -88,6 +89,7 @@
                     <div id="staff-registration" style="display: none;">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
+                            <input type="hidden" name="user_type" value="staff">
                             <div class="form-group">
                                 <label for="staff_name">{{ __('Name') }}</label>
                                 <input id="staff_name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
@@ -135,3 +137,4 @@
 </div>
 
 @endsection
+
