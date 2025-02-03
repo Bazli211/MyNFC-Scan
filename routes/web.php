@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\NFCController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\FineController;
@@ -9,7 +8,6 @@ use App\Http\Controllers\StickerController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\FineStatusController;
 
-Route::post('/scan', [NFCController::class, 'store'])->name('scan.store');
 Route::get('/nfc-scan', function () {
     return view('frontend'); // Assuming frontend.blade.php is your NFC scanner
 })->name('nfc.scan');
@@ -60,6 +58,9 @@ Route::middleware(['auth'])->group(function () {
     // Show all fines (index)
     Route::get('fines', [FineController::class, 'index'])->name('fines.index');
 
+    // Show create form for a new fine in manual format
+    Route::get('fines/manual', [FineController::class, 'manual'])->name('fines.manual');
+
     // Show create form for a new fine
     Route::get('fines/create', [FineController::class, 'create'])->name('fines.create');
 
@@ -67,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('fines', [FineController::class, 'store'])->name('fines.store');
 
     // Show a specific fine
-    Route::get('fines/{fine}', [FineController::class, 'show'])->name('fines.show');
+    Route::get('/fines/{fine}', [FineController::class, 'show'])->name('fines.show');
 
     // Show edit form for a specific fine
     Route::get('fines/{fine}/edit', [FineController::class, 'edit'])->name('fines.edit');
@@ -77,9 +78,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Delete a specific fine
     Route::delete('fines/{fine}', [FineController::class, 'destroy'])->name('fines.destroy');
-
+    
     // Scan for the fine
-    Route::post('/scan', [FineController::class, 'scan'])->name('fines.scan');
+    Route::post('/scan', [FineController::class, 'scan'])->name('fines.scan')->middleware('web');
 });
 
 //vehicles
@@ -112,6 +113,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/stickers', [StickerController::class, 'index'])->name('stickers.index');
     Route::get('/stickers/create', [StickerController::class, 'create'])->name('stickers.create');
     Route::post('/stickers', [StickerController::class, 'store'])->name('stickers.store');
+    Route::get('/stickers/{unique_id}/renew', [StickerController::class, 'renew'])->name('stickers.renew');
 });
 
 
@@ -132,6 +134,9 @@ Route::get('/nfc/write', function () {
 //fine status controller
 Route::get('/fine-status', [FineStatusController::class, 'index'])->name('fine_status.index');
 Route::get('/fine-status/{id}', [FineStatusController::class, 'show'])->name('fine_status.show');
+
+
+
 
 
 
