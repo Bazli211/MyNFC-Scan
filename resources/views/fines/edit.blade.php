@@ -131,13 +131,20 @@ input[readonly] {
                 <input type="text" class="form-control" id="kod_program" name="kod_program"
                     value="{{ old('kod_program', isset($fine->student) ? $fine->student->kod_program : '') }}" readonly>
             </div>
+            
             <!-- Fakulti -->
             <div class="form-group">
                 <label for="fakulti">Faculty</label>
                 <input type="text" class="form-control" id="fakulti" name="fakulti"
                     value="{{ old('fakulti', isset($fine->student)?$fine->student->fakulti : '') }}" readonly>
             </div>
-
+           <!-- Status Pelajar-->
+             <div class="form-group">
+                <label for="fakulti">Faculty</label>
+                <input type="text" class="form-control" id="fakulti" name="fakulti"
+                    value="{{ old('fakulti', isset($fine->student_status)?$fine->student->student_status : '') }}" readonly>
+            </div>
+                
             <!-- Kolej -->
             <div class="form-group">
                 <label for="kolej">College</label>
