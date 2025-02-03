@@ -6,7 +6,9 @@
     <p>NO: {{$sticker->id}}</p>
     <p>Unique ID: {{ $sticker->unique_id }}</p> <!-- Use unique_id here -->
     <p>Student Matric: {{ $sticker->student_matricNumber }}</p>
-    <p>Validity Date: {{ $sticker->validity_date }}</p>
+    <p>Application Date: {{ $sticker->requested_date }}</p>
+    <p>Accepted Date: {{ $sticker->accepted_date }}</p>
+    <p>Expired Date: {{ $sticker->expired_date }}</p>
     <p>Status: {{ $sticker->status_sticker }}</p>
 
     @if($sticker->status_sticker === 'requested')
@@ -21,4 +23,6 @@
     @endif
 </div>
 @endsection
+
+
 
