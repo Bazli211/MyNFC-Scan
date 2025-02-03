@@ -14,24 +14,37 @@ class Fine extends Model
         'fine_time',
         'comment',
         'kesalahan', // Store JSON
+        'vehiclePlateNum',
+        'vehicle_type',
+        'vehicle_brand',
+        'session',
+        'nama_pelajar',
+        'kod_program',
+        'fakulti',
+        'kolej',
+        'di_kunci_di_saman',
+        'dikompaun',
+        'compounded_expiration',
+        'student_status'
+    ];
+    protected $casts = [
+        'kesalahan' => 'array', // Cast kesalahan to array
+        'compounded_expiration' => 'datetime', // Cast compounded_expiration to datetime
     ];
 
-    // Relationship with User
     public function student()
     {
         return $this->belongsTo(User::class, 'student_matricNum', 'matric_number');
     }
 
-    // Relationship with Sticker
     public function sticker()
     {
         return $this->belongsTo(Sticker::class, 'sticker_id', 'unique_id');
     }
 
-    //Relationship with Vehicle
     public function vehicle()
     {
-        return $this->hasOne(Vehicle::class, 'student_matricNumber', 'student_matricNum');
+        return $this->belongsTo(Vehicle::class, 'student_matricNum', 'student_matricNumber');
     }
 
 }
