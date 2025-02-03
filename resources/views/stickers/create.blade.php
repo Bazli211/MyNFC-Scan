@@ -15,19 +15,23 @@
         </div>
     @endif
 
-    {{-- Sticker Request Form --}}
-    <form action="{{ route('stickers.store') }}" method="POST">
-        @csrf
+   {{-- Sticker Request Form --}}
+<form action="{{ route('stickers.store') }}" method="POST">
+    @csrf
 
-        {{-- Validity Date --}}
-        <div class="form-group">
-            <label for="validity_date">Sticker Validity Date</label>
-            <input type="date" name="validity_date" id="validity_date" class="form-control" required>
-        </div>
+    {{-- Validity Date --}}
+    <div class="form-group">
+        <label for="requested_date">Sticker Application Date</label>
+        <input type="date" name="requested_date" id="requested_date" class="form-control" value="{{ old('requested_date', $sticker->requested_date ?? now()->format('Y-m-d')) }}" required>
+        <small class="form-text text-muted">
+            It is recommended to select today's date for the best experience.
+        </small>
+    </div>
 
-        {{-- Submit Button --}}
-        <button type="submit" class="btn btn-primary mt-3">Request Sticker</button>
-    </form>
+    {{-- Submit Button --}}
+    <button type="submit" class="btn btn-primary mt-3">Renew Sticker</button>
+</form>
 </div>
 @endsection
+
 
