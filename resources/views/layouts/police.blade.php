@@ -7,85 +7,66 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>MyNFC Scan</title>
+    <title>CampusGuard</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ secure_asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-        /* Default (Light Mode) */
-        body {
-            background-color: #ffffff;
-            color: #000000;
-        }
+    /* Body Styling */
+    body {
+        background-color: #e3f2fd; /* Light blue background for a fresh look */
+        color: #0d47a1; /* Dark blue text for readability */
+        font-family: 'Nunito', sans-serif;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
 
-        .card {
-            background-color: #f8f9fa;
-            color: #000000;
-        }
+    /* Card Styling */
+    .card {
+        background-color: #ffffff; /* Bright white card background */
+        color: #424242; /* Neutral gray text */
+        margin: 15px;
+        padding: 20px;
+        border-radius: 10px; /* Smooth rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
 
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
+    .card:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    }
 
-        .card.dark-mode {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
+    /* Navbar Toggler Styling */
+    .navbar-toggler {
+        border: none; /* Removes default border */
+        background-color: #0d47a1; /* Dark blue background */
+        color: #ffffff; /* White icon for visibility */
+        padding: 10px;
+        border-radius: 5px; /* Smooth rounded corners */
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        /* Toggle Button Style */
-        .toggle-dark-mode {
-            cursor: pointer;
-            padding: 10px 15px;
-            font-size: 14px;
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-        }
+    .navbar-toggler:hover {
+        background-color: #1565c0; /* Slightly lighter blue on hover */
+        color: #ffeb3b; /* Yellow icon on hover */
+    }
 
-        .toggle-dark-mode:hover {
-            background-color: #0056b3;
-        }
-
-        /* Responsive Navbar */
-        .navbar-toggler {
-            border: none;
-        }
-
-        .dark-mode-toggler {
-            margin-left: auto;
-        }
-    </style>
-
-    <script>
-        function toggleDarkMode() {
-            const body = document.body;
-            body.classList.toggle('dark-mode');
-            // Save the preference to localStorage
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Load the user's dark mode preference on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-        });
-    </script>
+    .navbar-toggler:focus {
+        outline: none; /* Removes focus outline */
+        box-shadow: 0 0 5px #0d47a1; /* Adds a focus shadow for accessibility */
+    }
+</style>
 </head>
 <body>
     <div id="app">
@@ -93,7 +74,7 @@
             <div class="container">
                 <!-- Changed the title to MyNFC Scan -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    MyNFC Scan
+                    CampusGuard
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -107,17 +88,20 @@
                                 <a class="nav-link" href="{{ route('police.dashboard') }}">Dashboard</a>
                             </li>
                         @endauth
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('police.stickers.index') }}">Stickers</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('nfc.scan') }}">Scan</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('fines.index') }}">Fine</a>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <!-- Dark Mode Toggle Button -->
-                        <li class="nav-item me-3">
-                            <button class="toggle-dark-mode dark-mode-toggler" onclick="toggleDarkMode()">
-                                Toggle Dark Mode
-                            </button>
-                        </li>
-
+                    <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
