@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sticker;
+use App\Vehicle;
 
 class StickerController extends Controller
 {
@@ -30,20 +31,18 @@ class StickerController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'validity_date' => 'required|date',
+        'requested_date' => 'required|date|after_or_equal:today',
     ]);
 
     Sticker::create([
         'unique_id' => Sticker::generateNextUniqueId(), // Use the generateNextUniqueId method to create unique_id
         'student_matricNumber' => auth()->user()->matric_number,
-        'validity_date' => $request->validity_date,
+        'requested_date' => $request->requested_date,
         'status_sticker' => 'requested',
     ]);
 
     return redirect()->route('stickers.index')->with('success', 'Sticker requested successfully!');
 }
-
-    
     
     // Police view all stickers
     public function policeIndex(Request $request)
@@ -83,8 +82,11 @@ public function approve($unique_id)
         return redirect()->back()->with('error', 'Sticker not found.');
     }
 
-    $sticker->status_sticker = 'approved'; // Update status
-    $sticker->save();
+    $sticker->update([
+        'status_sticker' => Sticker::STATUS_APPROVED,
+        'accepted_date' => now(),
+        'expired_date' => now()->addYear(),
+    ]);
 
     return redirect()->route('police.stickers.index')->with('success', 'Sticker approved successfully.');
 }
@@ -102,5 +104,14 @@ public function reject($unique_id)
 
     return redirect()->route('police.stickers.index')->with('success', 'Sticker rejected successfully.');
 }
+public function renew($unique_id)
+{
+    $sticker = Sticker::where('unique_id', $unique_id)->firstOrFail();
 
+    if ($sticker->expired_date > now()) {
+        return redirect()->route('stickers.index')->with('error', 'This sticker is not eligible for renewal yet.');
+    }
+
+    return view('stickers.create', ['sticker' => $sticker]);
+}
 }
