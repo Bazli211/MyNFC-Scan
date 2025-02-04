@@ -69,7 +69,7 @@
         <button class="btn btn-primary" onclick="showStickerWarning()" type="button">Add Vehicle</button>
     @endif
 @endif
-
+@endsection
 @section('scripts')
 <script>
     function showStickerWarning() {
