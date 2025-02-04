@@ -141,7 +141,7 @@
              <div class="form-group">
                 <label for="student_status">Status Student</label>
                 <input type="text" class="form-control" id="student_status" name="student_status"
-                    value="{{ old('student_status', isset($fine->student_status)?$fine->student->student_status : '') }}" readonly>
+                    value="{{ old('student_status', isset($fine->student)?$fine->student->student_status : '') }}" readonly>
             </div>
             
             <!-- Kolej -->
