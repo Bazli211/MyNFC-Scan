@@ -2,22 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h2>Edit Vehicle</h2>
+    <h2>Edit Vehicle Information</h2>
 
-    <form method="POST" action="{{ route('vehicles.update', $vehicle->id) }}">
+    <form action="{{ route('vehicles.update', $vehicle->id) }}" method="POST">
         @csrf
-        @method('PUT') <!-- Important to send a PUT request -->
-
-        <div class="form-group">
-            <label for="vehiclePlateNum">Vehicle Plate Number</label>
-            <input type="text" id="vehiclePlateNum" class="form-control @error('vehiclePlateNum') is-invalid @enderror" name="vehiclePlateNum" value="{{ old('vehiclePlateNum', $vehicle->vehiclePlateNum) }}" required>
-
-            @error('vehiclePlateNum')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
+        @method('PUT')
 
         <div class="form-group">
             <label for="vehicle_type">Vehicle Type</label>
@@ -35,48 +24,50 @@
             </div>
         </div>
 
+        <div id="motorcycle-form" class="additional-form" style="display: none;">
+            <div class="form-group">
+                <label for="motorcycle_model">Motorcycle Model</label>
+                <input type="text" id="motorcycle_model" name="motorcycle_model" class="form-control" value="{{ old('motorcycle_model', $vehicle->motorcycle_model) }}">
+            </div>
+        </div>
+
+        <div id="car-form" class="additional-form" style="display: none;">
+            <div class="form-group">
+                <label for="car_model">Car Model</label>
+                <input type="text" id="car_model" name="car_model" class="form-control" value="{{ old('car_model', $vehicle->car_model) }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="vehiclePlateNum">Vehicle Plate Number</label>
+            <input type="text" name="vehiclePlateNum" class="form-control" value="{{ old('vehiclePlateNum', $vehicle->vehiclePlateNum) }}" required>
+        </div>
         <div class="form-group">
             <label for="vehicle_brand">Vehicle Brand</label>
-            <select id="vehicle_brand" name="vehicle_brand" class="form-control @error('vehicle_brand') is-invalid @enderror" required>
-                <!-- Options will be dynamically populated -->
+            <select id="vehicle_brand" name="vehicle_brand" class="form-control" required>
             </select>
-
-            @error('vehicle_brand')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
         </div>
-
         <div class="form-group">
             <label for="sticker_date">Sticker Date</label>
-            <input type="date" id="sticker_date" class="form-control" name="sticker_date" value="{{ $vehicle->sticker_date->format('Y-m-d') }}" readonly>
+            <input type="text" name="sticker_date" class="form-control" value="{{ $vehicle->sticker_date }}" readonly>
         </div>
-
         <div class="form-group">
             <label for="vehicle_color">Vehicle Color</label>
             <select id="vehicle_color" name="vehicle_color" class="form-control" required>
-                <option value="Red" {{ old('vehicle_color', $vehicle->vehicle_color) == 'Red' ? 'selected' : '' }}>Red</option>
-                <option value="Blue" {{ old('vehicle_color', $vehicle->vehicle_color) == 'Blue' ? 'selected' : '' }}>Blue</option>
-                <option value="Black" {{ old('vehicle_color', $vehicle->vehicle_color) == 'Black' ? 'selected' : '' }}>Black</option>
-                <option value="White" {{ old('vehicle_color', $vehicle->vehicle_color) == 'White' ? 'selected' : '' }}>White</option>
-                <option value="Yellow" {{ old('vehicle_color', $vehicle->vehicle_color) == 'Yellow' ? 'selected' : '' }}>Yellow</option>
-                <option value="Green" {{ old('vehicle_color', $vehicle->vehicle_color) == 'Green' ? 'selected' : '' }}>Green</option>
+                <option value="red" {{ old('vehicle_color', $vehicle->vehicle_color) == 'red' ? 'selected' : '' }}>Red</option>
+                <option value="blue" {{ old('vehicle_color', $vehicle->vehicle_color) == 'blue' ? 'selected' : '' }}>Blue</option>
+                <option value="black" {{ old('vehicle_color', $vehicle->vehicle_color) == 'black' ? 'selected' : '' }}>Black</option>
+                <option value="white" {{ old('vehicle_color', $vehicle->vehicle_color) == 'white' ? 'selected' : '' }}>White</option>
+                <option value="yellow" {{ old('vehicle_color', $vehicle->vehicle_color) == 'yellow' ? 'selected' : '' }}>Yellow</option>
+                <option value="green" {{ old('vehicle_color', $vehicle->vehicle_color) == 'green' ? 'selected' : '' }}>Green</option>
             </select>
         </div>
-
         <div class="form-group">
-            <label for="roadtax_date">Roadtax Date</label>
-            <input type="date" id="roadtax_date" class="form-control @error('roadtax_date') is-invalid @enderror" name="roadtax_date" value="{{ old('roadtax_date', $vehicle->roadtax_date ? $vehicle->roadtax_date->format('Y-m-d') : '') }}" required>
-
-            @error('roadtax_date')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+            <label for="roadtax_date">Road Tax Date</label>
+            <input type="date" name="roadtax_date" class="form-control" value="{{ old('roadtax_date', $vehicle->roadtax_date) }}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update Vehicle</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
 
@@ -90,9 +81,13 @@
         radio.addEventListener('change', () => {
             const type = document.querySelector('input[name="vehicle_type"]:checked').value;
             const brandSelect = document.getElementById('vehicle_brand');
+            const motorcycleForm = document.getElementById('motorcycle-form');
+            const carForm = document.getElementById('car-form');
 
-            // Populate vehicle brand dropdown
-            brandSelect.innerHTML = ''; // Clear current options
+            motorcycleForm.style.display = type === 'motorcycle' ? 'block' : 'none';
+            carForm.style.display = type === 'car' ? 'block' : 'none';
+
+            brandSelect.innerHTML = ''; 
             brands[type].forEach(brand => {
                 const option = document.createElement('option');
                 option.value = brand;
@@ -103,12 +98,10 @@
         });
     });
 
-    // Initialize on load
     window.onload = () => {
         const selectedType = "{{ old('vehicle_type', $vehicle->vehicle_type) }}";
         if (selectedType) {
-            const event = new Event('change');
-            document.querySelector(`input[value="${selectedType}"]`).dispatchEvent(event);
+            document.querySelector(`input[value="${selectedType}"]`).dispatchEvent(new Event('change'));
         }
     };
 </script>
