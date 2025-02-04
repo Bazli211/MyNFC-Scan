@@ -67,11 +67,10 @@ input[readonly] {
                         value="{{ old('fine_date', $fine->fine_date) }}" readonly>
                 </div>
 
-                <!-- Fine Time -->
-                <div class="form-group">
-                    <label for="fine_time">Fine Time</label>
-                    <input type="time" class="form-control" id="fine_time" name="fine_time"
-                    value="<?php echo e(old('fine_time', $fine->fine_time ? $fine->fine_time->format('H:i') : '')); ?>"
+               <div class="form-group">
+                    <label for="fine_date">Fine Date</label>
+                    <input type="date" class="form-control" id="fine_date" name="fine_date"
+                    value="{{ old('fine_date', $fine->fine_date) }}" required>
                 </div>
 
                 <!-- Location -->
