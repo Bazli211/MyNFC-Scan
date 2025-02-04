@@ -154,7 +154,6 @@ public function store(Request $request)
             'motorcycle_model' => 'nullable|required_if:vehicle_type,motorcycle|string|max:255',
             'car_model' => 'nullable|required_if:vehicle_type,car|string|max:255',
         ]);
-    $vehicle = Vehicle::findOrFail($id);
     // Update the vehicle details
    $vehicle->update([
             'roadtax_date' => $request->roadtax_date,
