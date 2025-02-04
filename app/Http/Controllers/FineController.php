@@ -135,22 +135,20 @@ public function store(Request $request, Fine $fine)
     }
 
     // Show the form for editing the specified fine
-    public function edit(Fine $fine)
-    {
-        $vehicle = $fine->vehicle;
-        $user = $fine->student;
-    
-        return view('fines.edit', [
-            'fine' => $fine->load(['vehicle', 'student']),
-            'vehicle_type' => $vehicle->vehicle_type ?? null,
-            'vehicle_brand' => $vehicle->vehicle_brand ?? null,
-            'nama_pelajar' => $user->name ?? null,
-            'kod_program' => $user->kod_program ?? null,
-            'fakulti' => $user->fakulti ?? null,
-            'kolej' => $user->kolej ?? null,
-            'student_status' => $user->student_status ?? null,
-        ]);
-    }
+   public function edit(Fine $fine)
+{
+    // Eager load relationships with null prevention
+    $fine->load([
+        'vehicle' => function($query) {
+            $query->withDefault();
+        },
+        'student' => function($query) {
+            $query->withDefault();
+        }
+    ]);
+
+    return view('fines.edit', compact('fine'));
+}
     
    // Update the specified fine in storage
 public function update(Request $request, Fine $fine)
