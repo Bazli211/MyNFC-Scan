@@ -58,7 +58,7 @@
 </table>
 
     {{-- Edit button --}}
-    <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-warning">Edit Vehicle</a>
+   <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-warning" onclick="return confirmEdit(event)">Edit Vehicle</a>
 @else
     {{-- Add vehicle logic --}}
     @if(!$warnings->contains('No sticker found.') && !$warnings->contains('Your sticker request is pending approval.'))
@@ -97,6 +97,20 @@
         @endif
         alert(message);
     }
+    function confirmEdit(event) {
+    event.preventDefault();
+    const warningMessage = "Warning: You are about to modify vehicle details.\n\n" +
+        "• All information must be accurate and up-to-date\n" +
+        "• Misinformation may result in fines during police scans\n" +
+        "• You're responsible for maintaining correct data\n\n" +
+        "Proceed to edit vehicle details?";
+    
+    if (confirm(warningMessage)) {
+        window.location.href = event.currentTarget.href;
+        return true;
+    }
+    return false;
+}
 </script>
 @endsection
 
