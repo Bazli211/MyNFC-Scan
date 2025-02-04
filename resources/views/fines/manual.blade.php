@@ -30,38 +30,52 @@
             <input type="text" class="form-control" id="vehiclePlateNum" name="vehiclePlateNum" value="">
         </div>
 
+        <!-- Vehicle Type Selection -->
         <div class="form-group">
             <label for="vehicle_type">Vehicle Type</label>
             <div>
                 <label>
                     <input type="radio" name="vehicle_type" value="motorcycle" class="vehicle-type" 
-                    {{ old('vehicle_type') == 'Motorcycle' ? 'checked' : '' }} required>
+                    {{ old('vehicle_type') == 'motorcycle' ? 'checked' : '' }} required>
                     Motorcycle
                 </label>
                 <label>
                     <input type="radio" name="vehicle_type" value="car" class="vehicle-type" 
-                    {{ old('vehicle_type') == 'Car' ? 'checked' : '' }}>
+                    {{ old('vehicle_type') == 'car' ? 'checked' : '' }}>
                     Car
                 </label>
             </div>
         </div>
 
-       <!-- Vehicle Brand -->
+      <!-- Vehicle Brand -->
         <div class="form-group">
             <label for="vehicle_brand">Vehicle Brand</label>
             <select id="vehicle_brand" name="vehicle_brand" class="form-control" required>
                 <option value="" disabled selected>Select Vehicle Brand</option>
-                <option value="Honda">Honda</option>
-                <option value="Yamaha">Yamaha</option>
-                <option value="Suzuki">Suzuki</option>
-                <option value="Toyota">Toyota</option>
-                <option value="Ford">Ford</option>
-                <option value="BMW">BMW</option>
-                <option value="Perodua">Perodua</option>
-                <option value="Proton">Proton</option>
-                <option value="Hyundai">Hyundai</option>
+                <!-- Motorcycle Brands -->
+                <optgroup label="Motorcycle Brands" class="motorcycle-brands">
+                    @foreach(['Honda', 'Yamaha', 'Suzuki', 'Modenas'] as $brand)
+                        <option value="{{ $brand }}" 
+                            {{ old('vehicle_brand') == $brand ? 'selected' : '' }}
+                            data-vehicle-type="motorcycle">
+                            {{ $brand }}
+                        </option>
+                    @endforeach
+                </optgroup>
+                
+                <!-- Car Brands -->
+                <optgroup label="Car Brands" class="car-brands">
+                    @foreach(['Toyota', 'Ford', 'BMW', 'Perodua', 'Proton', 'Hyundai'] as $brand)
+                        <option value="{{ $brand }}" 
+                            {{ old('vehicle_brand') == $brand ? 'selected' : '' }}
+                            data-vehicle-type="car">
+                            {{ $brand }}
+                        </option>
+                    @endforeach
+                </optgroup>
             </select>
         </div>
+
         <!-- Fine Date -->
         <div class="form-group">
             <label for="fine_date">Fine Date</label>
@@ -195,4 +209,40 @@
         </div>
     </form>
 </div>
+@endsection
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const vehicleTypeRadios = document.querySelectorAll('.vehicle-type');
+    const vehicleBrandSelect = document.getElementById('vehicle_brand');
+    
+    function updateBrandOptions() {
+        const selectedType = document.querySelector('.vehicle-type:checked')?.value;
+        const options = vehicleBrandSelect.options;
+        
+        // Enable/disable options based on vehicle type
+        for (let i = 0; i < options.length; i++) {
+            const option = options[i];
+            if (option.dataset.vehicleType) {
+                option.style.display = option.dataset.vehicleType === selectedType ? '' : 'none';
+                option.disabled = option.dataset.vehicleType !== selectedType;
+            }
+        }
+        
+        // Reset selection if current selection doesn't match type
+        if (vehicleBrandSelect.value && 
+            vehicleBrandSelect.selectedOptions[0].dataset.vehicleType !== selectedType) {
+            vehicleBrandSelect.value = '';
+        }
+    }
+
+    // Initial update based on pre-selected type (if any)
+    updateBrandOptions();
+    
+    // Add event listeners to radio buttons
+    vehicleTypeRadios.forEach(radio => {
+        radio.addEventListener('change', updateBrandOptions);
+    });
+});
+</script>
 @endsection
