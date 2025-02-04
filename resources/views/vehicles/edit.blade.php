@@ -4,31 +4,33 @@
 <div class="container">
     <h2>Edit Vehicle</h2>
 
-    <form action="{{ route('vehicles.update', $vehicle->id) }}" method="POST">
+      <form action="{{ route('vehicles.update', $vehicle->id) }}" method="POST" class="p-4 bg-white shadow-md rounded-lg max-w-lg mx-auto">
     @csrf
     @method('PUT')
 
-    <div>
-        <label for="sticker_date">Sticker Date</label>
-        <input type="text" id="sticker_date" name="sticker_date" value="{{ $vehicle->sticker_date }}" readonly>
+    <h2 class="text-xl font-bold mb-4">Edit Vehicle Details</h2>
+
+    <div class="mb-4">
+        <label for="sticker_date" class="block text-gray-700 font-semibold">Sticker Date</label>
+        <input type="text" id="sticker_date" name="sticker_date" value="{{ $vehicle->sticker_date }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
     </div>
 
-    <div>
-        <label for="vehicle_brand">Vehicle Brand</label>
-        <input type="text" id="vehicle_brand" name="vehicle_brand" value="{{ $vehicle->vehicle_brand }}" readonly>
+    <div class="mb-4">
+        <label for="vehicle_brand" class="block text-gray-700 font-semibold">Vehicle Brand</label>
+        <input type="text" id="vehicle_brand" name="vehicle_brand" value="{{ $vehicle->vehicle_brand }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
     </div>
 
-    <div>
-        <label for="roadtax_date">Road Tax Date</label>
-        <input type="date" id="roadtax_date" name="roadtax_date" value="{{ $vehicle->roadtax_date }}">
+    <div class="mb-4">
+        <label for="roadtax_date" class="block text-gray-700 font-semibold">Road Tax Date</label>
+        <input type="date" id="roadtax_date" name="roadtax_date" value="{{ $vehicle->roadtax_date }}" class="w-full px-3 py-2 border rounded-lg">
     </div>
 
-    <div>
-        <label for="vehicle_color">Vehicle Color</label>
-        <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}">
+    <div class="mb-4">
+        <label for="vehicle_color" class="block text-gray-700 font-semibold">Vehicle Color</label>
+        <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}" class="w-full px-3 py-2 border rounded-lg">
     </div>
 
-    <button type="submit">Update Vehicle</button>
+    <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Update Vehicle</button>
 </form>
 
 </div>
