@@ -106,15 +106,24 @@ input[readonly] {
                             "11. KENDERAAN DIKUNCI",
                         ];
                         $selectedKesalahan = $fine->kesalahan ?? [];
-                    @endphp
-                    @foreach ($kesalahanOptions as $index => $kesalahan)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="kesalahan_{{ $index }}" 
-                                name="kesalahan[]" value="{{ $kesalahan }}" 
-                                {{ in_array($kesalahan, old('kesalahan', $selectedKesalahan)) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="kesalahan_{{ $index }}">{{ $kesalahan }}</label>
-                        </div>
-                    @endforeach
+    if (!is_array($selectedKesalahan)) {
+        $selectedKesalahan = json_decode($selectedKesalahan, true) ?? [];
+    }
+@endphp
+
+<!-- Then in your checkboxes -->
+@foreach ($kesalahanOptions as $index => $kesalahan)
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" 
+               id="kesalahan_{{ $index }}" 
+               name="kesalahan[]" 
+               value="{{ $kesalahan }}"
+               {{ in_array($kesalahan, old('kesalahan', $selectedKesalahan)) ? 'checked' : '' }}>
+        <label class="form-check-label" for="kesalahan_{{ $index }}">
+            {{ $kesalahan }}
+        </label>
+    </div>
+@endforeach
                 </div>
 
                  <!-- Nama Pelajar -->
