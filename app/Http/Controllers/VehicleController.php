@@ -119,7 +119,7 @@ public function store(Request $request)
         return view('vehicles.edit', compact('vehicle'));
     }
 
-    public function update(Request $request, Vehicle $vehicle)
+  public function update(Request $request, Vehicle $vehicle)
 {
     // Check if the logged-in student owns this vehicle
     if ($vehicle->student_matricNumber !== Auth::user()->matric_number) {
@@ -146,31 +146,19 @@ public function store(Request $request)
 
     // Validate the input
     $request->validate([
-        'vehiclePlateNum' => 'required|unique:vehicles,vehiclePlateNum',
-        'vehicle_type' => 'required|in:motorcycle,car',
-        'vehicle_brand' => 'required',
-        'motorcycle_model' => $request->vehicle_type === 'motorcycle' ? 'required' : 'nullable',
-        'car_model' => $request->vehicle_type === 'car' ? 'required' : 'nullable',
-        'vehicle_color' => 'required',
         'roadtax_date' => 'required|date',
+        'vehicle_color' => 'required|string|max:255',
     ]);
 
     // Update the vehicle details
     $vehicle->update([
-        'vehiclePlateNum' => $request->vehiclePlateNum,
-        'vehicle_type' => $request->vehicle_type,
-        'vehicle_brand' => $request->vehicle_brand,
-        'motorcycle_model' => $request->vehicle_type === 'motorcycle' ? $request->motorcycle_model : null,
-        'car_model' => $request->vehicle_type === 'car' ? $request->car_model : null,
-        'sticker_date' => $sticker->expired_date,
-        'vehicle_color' => $request->vehicle_color,
         'roadtax_date' => $request->roadtax_date,
+        'vehicle_color' => $request->vehicle_color,
     ]);
     
 
     return redirect()->route('vehicles.index')->with('success', 'Vehicle updated successfully.');
 }
-
 
     public function destroy(Vehicle $vehicle)
 {
