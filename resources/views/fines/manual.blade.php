@@ -159,7 +159,7 @@
             <input type="text" class="form-control" id="fakulti" name="fakulti" value="">
         </div>
         
-        <!-- Status Pelajar-->
+<!-- Status Pelajar-->
 <div class="form-group">
     <label>Student Status</label><br>
     <div class="form-check form-check-inline">
@@ -174,9 +174,9 @@
     </div>
 </div>
 
-<!-- Kolej (initially hidden) -->
-<div class="form-group" id="kolejGroup" style="display: none;">
-    <label for="kolej">Kolej</label>
+<!-- Kolej (always visible) -->
+<div class="form-group" id="kolejGroup">
+    <label for="kolej">Kolej <span class="text-danger" id="kolejRequired" style="display: none;">*</span></label>
     <input type="text" class="form-control" id="kolej" name="kolej" 
            value="{{ old('kolej') }}">
 </div>
@@ -255,24 +255,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-    document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
     const statusRadios = document.querySelectorAll('input[name="student_status"]');
-    const kolejGroup = document.getElementById('kolejGroup');
+    const kolejInput = document.getElementById('kolej');
+    const kolejRequired = document.getElementById('kolejRequired');
 
-    function toggleKolejVisibility() {
-        const selectedStatus = document.querySelector('input[name="student_status"]:checked')?.value;
-        kolejGroup.style.display = selectedStatus === 'Resident' ? 'block' : 'none';
+    function updateKolejRequirements() {
+        const isResident = document.querySelector('input[name="student_status"]:checked')?.value === 'Resident';
         
-        // Optional: Add/remove required attribute based on visibility
-        document.getElementById('kolej').required = selectedStatus === 'Resident';
+        // Toggle required attribute and visual indicator
+        kolejInput.required = isResident;
+        kolejRequired.style.display = isResident ? 'inline' : 'none';
+        
+        // Optional: Add/remove visual styling
+        kolejInput.parentElement.classList.toggle('required-field', isResident);
     }
 
     // Initial check
-    toggleKolejVisibility();
+    updateKolejRequirements();
 
     // Add event listeners
     statusRadios.forEach(radio => {
-        radio.addEventListener('change', toggleKolejVisibility);
+        radio.addEventListener('change', updateKolejRequirements);
     });
 });
 </script>
