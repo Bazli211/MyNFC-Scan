@@ -82,21 +82,6 @@
         @endif
         alert(message);
     }
-</script>
-@endsection
-</div>
-@section('scripts')
-<script>
-    function showStickerWarning() {
-        let message = "You cannot add a vehicle because:\n";
-        @if ($warnings->contains('No sticker found.'))
-            message += "- No sticker found. Please apply for a sticker.\n";
-        @endif
-        @if ($warnings->contains('Your sticker request is pending approval.'))
-            message += "- Your sticker request is pending approval.\n";
-        @endif
-        alert(message);
-    }
     function confirmEdit(event) {
     event.preventDefault();
     const warningMessage = "Warning: You are about to modify vehicle details.\n\n" +
@@ -114,4 +99,3 @@
 </script>
 @endsection
 
-@endsection
