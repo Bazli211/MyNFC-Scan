@@ -71,7 +71,7 @@ input[readonly] {
                 <div class="form-group">
                     <label for="fine_time">Fine Time</label>
                     <input type="time" class="form-control" id="fine_time" name="fine_time"
-                        value="{{ old('fine_time', $fine->fine_time) }}" readonly>
+                    value="{{ old('fine_time', $fine->fine_time->format('H:i')) }}" readonly>
                 </div>
 
                 <!-- Location -->
