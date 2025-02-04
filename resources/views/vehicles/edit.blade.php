@@ -11,7 +11,7 @@
     <h2 class="text-xl font-bold mb-4">Edit Vehicle Details</h2>
 
     <div class="mb-4">
-        <label for="sticker_date" class="block text-gray-700 font-semibold">Sticker Date</label>
+        <label for="sticker_date"class="form-control">Sticker Date</label>
         <input type="text" id="sticker_date" name="sticker_date" value="{{ $vehicle->sticker_date }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
     </div>
 
