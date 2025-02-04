@@ -31,7 +31,7 @@ class Fine extends Model
     protected $casts = [
         'kesalahan' => 'array',
         'fine_date' => 'date',
-        'compounded_expiration' => 'date'
+        'compounded_expiration' => 'date',
         'fine_time' => 'datetime:H:i',
     ];
 
