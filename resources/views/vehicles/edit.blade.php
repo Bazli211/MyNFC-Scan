@@ -26,9 +26,17 @@
     </div>
 
     <div class="form-group">
-        <label for="vehicle_color" class="block text-gray-700 font-semibold">Vehicle Color</label>
-        <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}"class="form-control">
-    </div>
+            <label for="vehicle_color">Vehicle Color</label>
+            <select id="vehicle_color" name="vehicle_color" class="form-control" required>
+                <option value="red" {{ old('vehicle_color') == 'Red' ? 'selected' : '' }}>Red</option>
+                <option value="blue" {{ old('vehicle_color') == 'Blue' ? 'selected' : '' }}>Blue</option>
+                <option value="black" {{ old('vehicle_color') == 'Black' ? 'selected' : '' }}>Black</option>
+                <option value="white" {{ old('vehicle_color') == 'White' ? 'selected' : '' }}>White</option>
+                <option value="yellow" {{ old('vehicle_color') == 'Yellow' ? 'selected' : '' }}>Yellow</option>
+                <option value="green" {{ old('vehicle_color') == 'Green' ? 'selected' : '' }}>Green</option>
+                <!-- Add more colors as needed -->
+            </select>
+        </div>
 
     <button type="submit" class="btn btn-primary">Update Vehicle</button>
 </form>
