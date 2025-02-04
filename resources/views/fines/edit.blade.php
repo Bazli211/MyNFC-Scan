@@ -67,10 +67,11 @@ input[readonly] {
                         value="{{ old('fine_date', $fine->fine_date) }}" readonly>
                 </div>
 
-               <div class="form-group">
-                    <label for="fine_date">Fine Date</label>
-                    <input type="date" class="form-control" id="fine_date" name="fine_date"
-                    value="{{ old('fine_date', $fine->fine_date) }}" required>
+                <!-- Fine Time -->
+                <div class="form-group">
+                    <label for="fine_time">Fine Time</label>
+                    <input type="time" class="form-control" id="fine_time" name="fine_time"
+                        value="{{ old('fine_time', $fine->fine_time) }}" readonly>
                 </div>
 
                 <!-- Location -->
