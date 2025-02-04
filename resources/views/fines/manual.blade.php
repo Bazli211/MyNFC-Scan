@@ -85,7 +85,7 @@
         <!-- Fine Time -->
         <div class="form-group">
             <label for="fine_time">Fine Time</label>
-            <input type="time" class="form-control" id="fine_time" name="fine_time" value="{{ now()->format('H:i') }}" required>
+           <input type="time" value="{{ old('fine_time', $fine->exists ? $fine->fine_time->format('H:i') : now()->format('H:i')) }}">
         </div>
 
       <!-- Location -->
@@ -127,17 +127,23 @@
                                 "10. MELETAK DI KORIDOR/LALUAN JALAN KAKI",
                                 "11. KENDERAAN DIKUNCI",
                             ];
-                        @endphp
-                        @foreach ($kesalahanOptions as $kesalahan)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="kesalahan_{{ $loop->index }}" 
-                                       name="kesalahan[]" value="{{ $kesalahan }}" 
-                                       {{ is_array(old('kesalahan', $fine->kesalahan ?? [])) && in_array($kesalahan, old('kesalahan', $fine->kesalahan ?? [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="kesalahan_{{ $loop->index }}">
-                                    {{ $kesalahan }}
-                                </label>
-                            </div>
-                        @endforeach
+                        $selectedKesalahan = $fine->exists ? $fine->kesalahan : [];
+    if (!is_array($selectedKesalahan)) {
+        $selectedKesalahan = json_decode($selectedKesalahan, true) ?? [];
+    }
+    $oldKesalahan = old('kesalahan', $selectedKesalahan);
+@endphp
+
+@foreach ($kesalahanOptions as $kesalahan)
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" 
+               id="kesalahan_{{ $loop->index }}" 
+               name="kesalahan[]" 
+               value="{{ $kesalahan }}" 
+               {{ in_array($kesalahan, $oldKesalahan) ? 'checked' : '' }}>
+        <label class="form-check-label">{{ $kesalahan }}</label>
+    </div>
+@endforeach
                     </div>
                 </div>
 
@@ -164,7 +170,7 @@
     <label>Student Status</label><br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="student_status" id="resident" 
-               value="Resident" {{ old('student_status') == 'Resident' ? 'checked' : '' }} required>
+               {{ (old('student_status', $fine->student_status ?? '') == 'Resident') ? 'checked' : '' }}
         <label class="form-check-label" for="resident">Resident</label>
     </div>
     <div class="form-check form-check-inline">
@@ -186,7 +192,7 @@
             <label for="di_kunci_di_saman">Di Kunci / Di Saman</label>
             <select class="form-control" id="di_kunci_di_saman" name="di_kunci_di_saman" required>
                 <option value="" disabled selected>Select Option</option>
-                <option value="Di Kunci">Di Kunci</option>
+                <option value="Di Kunci" {{ old('di_kunci_di_saman', $fine->di_kunci_di_saman ?? '') == 'Di Kunci' ? 'selected' : '' }}>Di Kunci</option>
                 <option value="Di Saman">Di Saman</option>
             </select>
         </div>
@@ -204,7 +210,7 @@
         <!-- Compounded Expiration -->
         <div class="form-group">
             <label for="compounded_expiration">Compounded Expiration Date</label>
-            <input type="date" class="form-control" id="compounded_expiration" name="compounded_expiration" value="">
+            <input type="date" value="{{ old('compounded_expiration', $fine->compounded_expiration ?? '') }}">
         </div>
 
         <!-- Comment -->
