@@ -155,21 +155,31 @@
 
         <!-- Fakulti -->
         <div class="form-group">
-            <label for="fakulti">Fakulti</label>
+            <label for="fakulti">Faculty</label>
             <input type="text" class="form-control" id="fakulti" name="fakulti" value="">
         </div>
         
         <!-- Status Pelajar-->
-        <div class="form-group">
-            <label for="fakulti">Faculty</label>
-            <input type="text" class="form-control" id="student_status" name="student_status" value="">
-        </div>
+<div class="form-group">
+    <label>Student Status</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="student_status" id="resident" 
+               value="Resident" {{ old('student_status') == 'Resident' ? 'checked' : '' }} required>
+        <label class="form-check-label" for="resident">Resident</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="student_status" id="non_resident" 
+               value="Non-Resident" {{ old('student_status') == 'Non-Resident' ? 'checked' : '' }}>
+        <label class="form-check-label" for="non_resident">Non-Resident</label>
+    </div>
+</div>
 
-        <!-- Kolej -->
-        <div class="form-group">
-            <label for="kolej">Kolej</label>
-            <input type="text" class="form-control" id="kolej" name="kolej" value="">
-        </div>
+<!-- Kolej (initially hidden) -->
+<div class="form-group" id="kolejGroup" style="display: none;">
+    <label for="kolej">Kolej</label>
+    <input type="text" class="form-control" id="kolej" name="kolej" 
+           value="{{ old('kolej') }}">
+</div>
 
         <!-- Di Kunci / Di Saman -->
         <div class="form-group">
@@ -242,6 +252,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners to radio buttons
     vehicleTypeRadios.forEach(radio => {
         radio.addEventListener('change', updateBrandOptions);
+    });
+});
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const statusRadios = document.querySelectorAll('input[name="student_status"]');
+    const kolejGroup = document.getElementById('kolejGroup');
+
+    function toggleKolejVisibility() {
+        const selectedStatus = document.querySelector('input[name="student_status"]:checked')?.value;
+        kolejGroup.style.display = selectedStatus === 'Resident' ? 'block' : 'none';
+        
+        // Optional: Add/remove required attribute based on visibility
+        document.getElementById('kolej').required = selectedStatus === 'Resident';
+    }
+
+    // Initial check
+    toggleKolejVisibility();
+
+    // Add event listeners
+    statusRadios.forEach(radio => {
+        radio.addEventListener('change', toggleKolejVisibility);
     });
 });
 </script>
