@@ -11,23 +11,23 @@
     <h2 class="text-xl font-bold mb-4">Edit Vehicle Details</h2>
 
     <div class="form-group">
-        <label for="sticker_date"class="form-control">Sticker Date</label>
-        <input type="text" id="sticker_date" name="sticker_date" value="{{ $vehicle->sticker_date }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
+        <label for="sticker_date"class="block text-gray-700 font-semibold">>Sticker Date</label>
+        <input type="text" id="sticker_date" name="sticker_date" value="{{ $vehicle->sticker_date }}" class="form-control" readonly>
     </div>
 
     <div class="form-group">
-        <label for="vehicle_brand" class="form-control">Vehicle Brand</label>
-        <input type="text" id="vehicle_brand" name="vehicle_brand" value="{{ $vehicle->vehicle_brand }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
+        <label for="vehicle_brand" class="block text-gray-700 font-semibold">>Vehicle Brand</label>
+        <input type="text" id="vehicle_brand" name="vehicle_brand" value="{{ $vehicle->vehicle_brand }}"class="form-control" readonly>
     </div>
 
     <div class="form-group">
-        <label for="roadtax_date"class="form-control">Road Tax Date</label>
-        <input type="date" id="roadtax_date" name="roadtax_date" value="{{ $vehicle->roadtax_date }}" class="w-full px-3 py-2 border rounded-lg">
+        <label for="roadtax_date"class="block text-gray-700 font-semibold">>Road Tax Date</label>
+        <input type="date" id="roadtax_date" name="roadtax_date" value="{{ $vehicle->roadtax_date }}"class="form-control">
     </div>
 
     <div class="form-group">
-        <label for="vehicle_color" class="form-control">Vehicle Color</label>
-        <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}" class="w-full px-3 py-2 border rounded-lg">
+        <label for="vehicle_color" class="block text-gray-700 font-semibold">>Vehicle Color</label>
+        <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}"class="form-control">
     </div>
 
     <button type="submit" class="btn btn-primary">Update Vehicle</button>
