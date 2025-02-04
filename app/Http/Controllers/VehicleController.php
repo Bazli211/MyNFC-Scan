@@ -145,16 +145,26 @@ public function store(Request $request)
    // \Log::info('Request data for validation:', $request->all());
 
     // Validate the input
-    $request->validate([
-        'roadtax_date' => 'required|date',
-        'vehicle_color' => 'required|string|max:255',
-    ]);
-
+      $request->validate([
+            'roadtax_date' => 'required|date',
+            'vehicle_color' => 'required|string|max:255',
+            'vehiclePlateNum' => 'required|unique:vehicles,vehiclePlateNum',
+            'vehicle_type' => 'required|in:motorcycle,car',
+            'vehicle_brand' => 'required|string|max:255',
+            'motorcycle_model' => 'nullable|required_if:vehicle_type,motorcycle|string|max:255',
+            'car_model' => 'nullable|required_if:vehicle_type,car|string|max:255',
+        ]);
+    $vehicle = Vehicle::findOrFail($id);
     // Update the vehicle details
-    $vehicle->update([
-        'roadtax_date' => $request->roadtax_date,
-        'vehicle_color' => $request->vehicle_color,
-    ]);
+   $vehicle->update([
+            'roadtax_date' => $request->roadtax_date,
+            'vehicle_color' => $request->vehicle_color,
+            'vehiclePlateNum' => $request->vehiclePlateNum,
+            'vehicle_type' => $request->vehicle_type,
+            'vehicle_brand' => $request->vehicle_brand,
+            'motorcycle_model' => $request->vehicle_type === 'motorcycle' ? $request->motorcycle_model : null,
+            'car_model' => $request->vehicle_type === 'car' ? $request->car_model : null,
+        ]);
     
 
     return redirect()->route('vehicles.index')->with('success', 'Vehicle updated successfully.');
