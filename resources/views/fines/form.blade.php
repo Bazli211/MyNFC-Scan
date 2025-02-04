@@ -102,17 +102,24 @@
                                 "10. MELETAK DI KORIDOR/LALUAN JALAN KAKI",
                                 "11. KENDERAAN DIKUNCI",
                             ];
-                        @endphp
-                        @foreach ($kesalahanOptions as $kesalahan)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="kesalahan_{{ $loop->index }}" 
-                                       name="kesalahan[]" value="{{ $kesalahan }}" 
-                                       {{ is_array(old('kesalahan', $fine->kesalahan ?? [])) && in_array($kesalahan, old('kesalahan', $fine->kesalahan ?? [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="kesalahan_{{ $loop->index }}">
-                                    {{ $kesalahan }}
-                                </label>
-                            </div>
-                        @endforeach
+                       $selectedKesalahan = $fine->exists ? $fine->kesalahan : [];
+    if (!is_array($selectedKesalahan)) {
+        $selectedKesalahan = json_decode($selectedKesalahan, true) ?? [];
+    }
+    $oldKesalahan = old('kesalahan', $selectedKesalahan);
+@endphp
+
+<!-- Checkbox Loop -->
+@foreach ($kesalahanOptions as $kesalahan)
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" 
+               id="kesalahan_{{ $loop->index }}" 
+               name="kesalahan[]" 
+               value="{{ $kesalahan }}" 
+               {{ in_array($kesalahan, $oldKesalahan) ? 'checked' : '' }}>
+        <label class="form-check-label">{{ $kesalahan }}</label>
+    </div>
+@endforeach
                     </div>
                 </div>
 
