@@ -12,35 +12,55 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
+   
+
     use RegistersUsers;
 
+    
     protected $redirectTo = RouteServiceProvider::HOME;
 
+   
     public function __construct()
     {
         $this->middleware('guest');
     }
 
+   
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
+            'user_type' => ['required', 'string', 'in:student,staff'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'matric_number' => 'nullable|string|max:20|unique:users',
-            'staff_id' => 'nullable|string|max:20|unique:users',
-        ]);
+        ];
+    
+        if ($data['user_type'] == 'student') {
+            $rules['matric_number'] = ['required', 'string', 'max:255', 'unique:users'];
+        } else {
+            $rules['staff_id'] = ['required', 'string', 'max:255', 'unique:users'];
+        }
+    
+        return Validator::make($data, $rules);
     }
-
+    
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'matric_number' => $data['matric_number'],
-            'staff_id' => $data['staff_id'],
-        ]);
+        if ($data['user_type'] == 'student') {
+            return User::create([
+                'name' => $data['name'],
+                'matric_number' => $data['matric_number'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        } else {
+            return User::create([
+                'name' => $data['name'],
+                'staff_id' => $data['staff_id'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }
     }
 
     protected function registered(Request $request, $user)
