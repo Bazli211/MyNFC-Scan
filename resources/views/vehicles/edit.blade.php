@@ -11,22 +11,22 @@
     <h2 class="text-xl font-bold mb-4">Edit Vehicle Details</h2>
 
     <div class="form-group">
-        <label for="sticker_date"class="block text-gray-700 font-semibold">>Sticker Date</label>
+        <label for="sticker_date"class="block text-gray-700 font-semibold">Sticker Date</label>
         <input type="text" id="sticker_date" name="sticker_date" value="{{ $vehicle->sticker_date }}" class="form-control" readonly>
     </div>
 
     <div class="form-group">
-        <label for="vehicle_brand" class="block text-gray-700 font-semibold">>Vehicle Brand</label>
+        <label for="vehicle_brand" class="block text-gray-700 font-semibold">Vehicle Brand</label>
         <input type="text" id="vehicle_brand" name="vehicle_brand" value="{{ $vehicle->vehicle_brand }}"class="form-control" readonly>
     </div>
 
     <div class="form-group">
-        <label for="roadtax_date"class="block text-gray-700 font-semibold">>Road Tax Date</label>
+        <label for="roadtax_date"class="block text-gray-700 font-semibold">Road Tax Date</label>
         <input type="date" id="roadtax_date" name="roadtax_date" value="{{ $vehicle->roadtax_date }}"class="form-control">
     </div>
 
     <div class="form-group">
-        <label for="vehicle_color" class="block text-gray-700 font-semibold">>Vehicle Color</label>
+        <label for="vehicle_color" class="block text-gray-700 font-semibold">Vehicle Color</label>
         <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}"class="form-control">
     </div>
 
