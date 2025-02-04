@@ -148,7 +148,7 @@ public function store(Request $request)
       $request->validate([
             'roadtax_date' => 'required|date',
             'vehicle_color' => 'required|string|max:255',
-            'vehiclePlateNum' => 'required|unique:vehicles,vehiclePlateNum',
+            'vehiclePlateNum' => 'required|unique:vehicles,vehiclePlateNum,'.$vehicle->id,
             'vehicle_type' => 'required|in:motorcycle,car',
             'vehicle_brand' => 'required|string|max:255',
             'motorcycle_model' => 'nullable|required_if:vehicle_type,motorcycle|string|max:255',
