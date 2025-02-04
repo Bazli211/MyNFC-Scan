@@ -32,7 +32,7 @@ class Fine extends Model
         'kesalahan' => 'array',
         'fine_date' => 'date',
         'compounded_expiration' => 'date',
-        'fine_time' => 'datetime:H:i',
+        'fine_time' => 'datetime', 
     ];
 
     public function student()
