@@ -29,8 +29,9 @@ class Fine extends Model
         'student_status'
     ];
     protected $casts = [
-        'kesalahan' => 'array', // Cast kesalahan to array
-        'compounded_expiration' => 'datetime', // Cast compounded_expiration to datetime
+        'kesalahan' => 'array',
+        'fine_date' => 'date',
+        'compounded_expiration' => 'date'
     ];
 
     public function student()
