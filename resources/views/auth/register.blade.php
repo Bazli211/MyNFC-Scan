@@ -1,8 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-
+<style>
+    .password-toggle {
+        position: absolute;
+        right: 25px;
+        transform: translateY(-175%);
+        cursor: pointer;
+        color: #666;
+    }
+    .password-input-group {
+        position: relative;
+    }
+</style>
 <script>
+ // Toggle password visibility
+    function togglePasswordVisibility(fieldId, icon) {
+        const passwordField = document.getElementById(fieldId);
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        icon.classList.toggle('fa-eye-slash');
+    }
+    
     // Toggle between Student and Staff registration forms
     function toggleRegistrationForm(userType) {
         const studentForm = document.getElementById('student-registration');
@@ -38,7 +57,7 @@
                     </ul>
                 </div>
 
-                <div class="card-body">
+                 <div class="card-body">
                     <!-- Student Registration Form -->
                     <div id="student-registration">
                         <form method="POST" action="{{ route('register') }}">
@@ -68,17 +87,19 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                           <div class="form-group password-input-group">
                                 <label for="student_password">{{ __('Password') }}</label>
                                 <input id="student_password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('student_password', this)"></i>
                                 @error('password')
                                     <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="form-group password-input-group">
+                                <label for="student-password-confirm">{{ __('Confirm Password') }}</label>
+                                <input id="student-password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('student-password-confirm', this)"></i>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block">{{ __('Register as Student') }}</button>
@@ -114,17 +135,19 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                           <div class="form-group password-input-group">
                                 <label for="staff_password">{{ __('Password') }}</label>
                                 <input id="staff_password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('staff_password', this)"></i>
                                 @error('password')
                                     <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="form-group password-input-group">
+                                <label for="staff-password-confirm">{{ __('Confirm Password') }}</label>
+                                <input id="staff-password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('staff-password-confirm', this)"></i>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block">{{ __('Register as Staff') }}</button>
@@ -135,6 +158,8 @@
         </div>
     </div>
 </div>
+<!-- Add Font Awesome for eye icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 @endsection
 
