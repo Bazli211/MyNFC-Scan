@@ -143,7 +143,7 @@ input[readonly] {
             <div class="form-group">
                 <label for="student_status">Faculty</label>
                 <input type="text" class="form-control" id="student_status" name="student_status"
-                    value="{{ old('fakulti', isset($fine->student_status)?$fine->student->student_status : '') }}" readonly>
+                    value="{{ old('student_status', isset($fine->student)?$fine->student->student_status : '') }}" readonly>
             </div>
 
             <!-- Kolej -->
