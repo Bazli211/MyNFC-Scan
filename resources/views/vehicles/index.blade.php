@@ -84,19 +84,28 @@
         @endif
         alert(message);
     }
-    function confirmEdit(event, element) {
-    const warningMessage = `Warning: You are about to modify vehicle details.\n\n
-        • All information must be accurate and up-to-date\n
-        • Misinformation may result in fines during police scans\n
-        • You're responsible for maintaining correct data\n\n
-        Proceed to edit vehicle details?`;
+</script>
+@endsection
+@section('scripts')
+<script>
+    function confirmEdit(event) {
+        const warningMessage = [
+            'Warning: Vehicle Details Modification',
+            '',
+            '• All information must match official documents',
+            '• Inaccurate data may result in fines during police inspections',
+            '• Changes must be reported within 24 hours of modification',
+            '• You are legally responsible for provided information',
+            '',
+            'Confirm changes?'
+        ].join('\n');
 
-    if (!confirm(warningMessage)) {
-        event.preventDefault();
-        return false;
+        if (!confirm(warningMessage)) {
+            event.preventDefault();
+            return false;
+        }
+        return true;
     }
-    return true;
-}
 </script>
 @endsection
 
