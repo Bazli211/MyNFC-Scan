@@ -30,7 +30,7 @@
         <input type="text" id="vehicle_color" name="vehicle_color" value="{{ $vehicle->vehicle_color }}" class="w-full px-3 py-2 border rounded-lg">
     </div>
 
-    <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Update Vehicle</button>
+    <button type="submit" class="btn btn-primary">Update Vehicle</button>
 </form>
 
 </div>
