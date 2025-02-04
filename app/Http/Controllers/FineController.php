@@ -163,7 +163,7 @@ public function update(Request $request, Fine $fine)
             'sticker_id' => 'required',
             'fine_date' => 'required|date',
             'location' => 'required|string',
-            'fine_time' => 'required|date_format:H:i:s',
+            'fine_time' => 'required|date_format:H:i',
             'comment' => 'nullable|string',
             'kesalahan' => 'required|array',
             'kesalahan.*' => 'string',
