@@ -14,6 +14,7 @@
             <ul class="list-unstyled">
                 <li><a href="{{ route('police.stickers.index') }}" class="btn btn-info btn-block mb-2">Manage Stickers</a></li>
                 <li><a href="{{ route('nfc.scan') }}" class="btn btn-success btn-block mb-2">NFC Scan for Fine</a></li>
+                <li><a href="{{ route('fines.manual') }}" class="btn btn-success btn-block mb-2">Manual Fine</a></li>
                 <li><a href="{{ route('fines.index') }}" class="btn btn-primary btn-block mb-2">Manage Fine</a></li>
                 <!--
                 <li>
